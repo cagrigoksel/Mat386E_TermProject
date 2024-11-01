@@ -1,0 +1,16 @@
+Road Map:
+
+1. Pyspark öğrenilecek - EMA'ya bakılacak.
+2. yfinance verileri postgresql'e aktarılacak.
+3. train - test (anomali tespiti - pandemi datası)
+3. data analysis - visualization - Adversary Validation
+2. Feature engineering (fikir lazım)
+3. Feature Scaling
+3. BorutaShap - BorutaPy (Feature Selection)
+4. Modeling - tuning - cross validation
+5. prediction visualization
+6. accuracy
+6. postgre'ye yaz.
+
+
+

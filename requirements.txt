@@ -1,0 +1,25 @@
+# Veri Çekme
+yfinance==0.2.26        # Yahoo Finance API'den veri çekmek için
+
+# Veri İşleme
+pandas==2.1.1           # Veri manipülasyonu ve analiz için
+numpy==1.26.4           # Sayısal işlemler için
+pyspark==3.5.0          # Büyük veri işlemleri için PySpark
+sqlalchemy==2.1.0       # Veritabanı bağlantısı ve işlemleri için
+
+# Makine Öğrenmesi ve Modelleme
+scikit-learn==1.3.0     # Makine öğrenmesi modelleri (örneğin, Random Forest) için
+xgboost==1.7.6          # XGBoost modeli için
+prophet==1.2.4          # Prophet ile zaman serisi tahmini için
+statsmodels==0.14.0     # Zaman serisi modelleme (ARIMA gibi) için
+
+# Veritabanı İşlemleri
+psycopg2-binary==2.9.7  # PostgreSQL veritabanı bağlantısı için
+
+# Görselleştirme
+matplotlib==3.8.0       # Veri görselleştirme için
+seaborn==0.13.0         # Grafik ve görselleştirme desteği için
+
+# Ek Araçlar
+tqdm==4.66.1            # İlerleme çubuğu (ETL veya uzun süren işlemler için faydalı)
+pyyaml==6.0.1           # YAML dosyalarıyla çalışma (örneğin, config dosyaları için)

@@ -1,0 +1,26 @@
+# Veri tabanı ayarları
+database:
+  host: "localhost"           # Veritabanı sunucu adresi
+  port: 5432                  # PostgreSQL varsayılan portu
+  dbname: "stock_predictions"  # Veritabanı adı
+  user: "your_db_user"        # Veritabanı kullanıcı adı
+  password: "your_db_password" # Veritabanı şifresi
+
+# API ayarları
+yahoo_finance:
+  api_key: "your_yahoo_api_key" # Yahoo Finance API anahtarı
+
+# Model ayarları
+model:
+  strategy: "buy-hold-sell"    # Tahmin stratejisi ("buy-sell", "buy-hold-sell", "next_day_price" seçeneklerinden biri)
+  model_type: "random_forest"  # Kullanılacak model tipi ("random_forest", "prophet", vb.)
+
+# Proje ayarları
+project:
+  initial_investment: 100000   # Başlangıç sermayesi
+  transaction_fee: 0.001       # İşlem ücreti oranı
+  train_period_start: "2010-01-01"
+  test_period_start: "2020-01-01"
+  validation_period_start: "2023-01-01"
+  prediction_period_start: "2024-01-01"
+  prediction_period_end: "2024-12-31"
