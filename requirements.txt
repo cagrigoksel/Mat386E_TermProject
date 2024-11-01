@@ -7,6 +7,9 @@ numpy            # Sayısal işlemler için
 pyspark          # Büyük veri işlemleri için PySpark
 sqlalchemy       # Veritabanı bağlantısı ve işlemleri için
 
+# Jupyter Notebook işlemleri için
+notebook
+
 # Makine Öğrenmesi ve Modelleme
 scikit-learn     # Makine öğrenmesi modelleri (örneğin, Random Forest) için
 xgboost          # XGBoost modeli için

@@ -1,10 +1,10 @@
 # Veri tabanı ayarları
 database:
   host: "localhost"           # Veritabanı sunucu adresi
-  port: 5432                  # PostgreSQL varsayılan portu
-  dbname: "stock_predictions"  # Veritabanı adı
-  user: "your_db_user"        # Veritabanı kullanıcı adı
-  password: "your_db_password" # Veritabanı şifresi
+  port: 5432                 # PostgreSQL varsayılan portu
+  dbname: "cagrigoksel"  # Veritabanı adı
+  user: "cagrigoksel"        # Veritabanı kullanıcı adı
+  password: "mat386_pw" # Veritabanı şifresi
 
 # API ayarları
 yahoo_finance:
