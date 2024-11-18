@@ -1,7 +1,7 @@
-from src.utils.data_utils import fetch_and_save_data
-from src.utils.dir_utils import setup_dirs
-from src.utils.data_utils import select_stocks
-from src.utils.config_utils import load_config
+from utils.data_utils import fetch_and_save_data
+from utils.dir_utils import setup_dirs
+from utils.data_utils import select_stocks
+from utils.config_utils import load_config
 
 def fetch_raw_data():
     """Tüm hisse senedi ve endeks verilerini çeker ve kaydeder."""
