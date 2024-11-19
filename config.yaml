@@ -17,8 +17,8 @@ model:
 
 # Proje ayarları
 project:
-  stocks: ["AAPL", "NVDA", "MSFT"]
-  indices: ["^GSPC", "^DJI"]
+  stocks: ["AAPL", "NVDA", "MSFT", "AVGO", "META", "AMZN", "TSLA"]
+  indices: ["^GSPC", "^DJI", "NQ=F", "RTY=F"]
   initial_investment: 100000   # Başlangıç sermayesi
   transaction_fee: 0.001       # İşlem ücreti oranı
   train_period_start: "2010-01-01"

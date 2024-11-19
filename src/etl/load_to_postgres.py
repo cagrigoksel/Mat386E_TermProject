@@ -1,6 +1,12 @@
 import glob
 import os
-from utils.db_utils import get_spark_session, get_db_properties, get_db_url, load_csv_to_postgres
+from utils.db_utils import (
+    get_spark_session, 
+    get_db_properties, 
+    get_db_url, 
+    load_csv_to_postgres,
+    cleanup_spark_session  
+)
 
 def load_raw_data_to_postgres():
     """Ham verileri PostgreSQL veritabanına yükler."""
@@ -8,9 +14,9 @@ def load_raw_data_to_postgres():
     print(f"Current working directory: {os.getcwd()}")
     
     # Spark oturumunu başlatma
-    spark = get_spark_session()
-
+    spark = None
     try:
+        spark = get_spark_session()
         # Veritabanı bağlantı ayarları
         db_url = get_db_url()
         db_properties = get_db_properties()
@@ -56,7 +62,8 @@ def load_raw_data_to_postgres():
         import traceback
         traceback.print_exc()
     finally:
-        spark.stop()
+        if spark:
+            cleanup_spark_session(spark)
 
 if __name__ == "__main__":
     load_raw_data_to_postgres()

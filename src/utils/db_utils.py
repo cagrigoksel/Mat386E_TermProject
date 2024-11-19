@@ -1,7 +1,9 @@
 import yaml
-from pyspark.sql import SparkSession
 import os
 from pyspark.sql.functions import lit, when, col, date_format, split, to_timestamp
+from pyspark.sql import SparkSession
+import tempfile
+import atexit
 
 
 
@@ -14,6 +16,13 @@ def load_db_config(config_path="config.yaml"):
 def get_spark_session():
     """Spark oturumu başlatır ve döndürür."""
     from pyspark.sql import SparkSession
+    import tempfile
+    import atexit
+    import os
+    
+    # Create a temporary directory that will be cleaned up on exit
+    temp_dir = tempfile.mkdtemp()
+    atexit.register(lambda: os.system(f'rmdir /S /Q "{temp_dir}"'))
     
     # Print the full path being used
     jdbc_path = r"C:\Users\deadp\postgresql-42.6.0.jar"
@@ -23,8 +32,17 @@ def get_spark_session():
         .appName("Stock_ETL") \
         .config("spark.driver.allowMultipleContexts", "true") \
         .config("spark.jars", jdbc_path) \
+        .config("spark.worker.cleanup.enabled", "true") \
+        .config("spark.storage.cleanupFilesAfterExecutor", "true") \
+        .config("spark.sql.warehouse.dir", temp_dir) \
+        .config("spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version", "2") \
+        .config("spark.driver.extraJavaOptions", "-Dlog4j.logLevel=ERROR") \
+        .config("spark.executor.extraJavaOptions", "-Dlog4j.logLevel=ERROR") \
         .master("local[*]") \
         .getOrCreate()
+    
+    # Set log level
+    spark.sparkContext.setLogLevel("ERROR")
     
     return spark
 
@@ -59,7 +77,6 @@ def load_csv_to_postgres(csv_file_path, table_name, spark, db_url, db_properties
 
         # Convert columns and format the DataFrame
         df = df.select(
-            # Extract datetime from Price column
             to_timestamp(split(col("Price"), ",").getItem(0), "yyyy-MM-dd HH:mm:ss+00:00").alias("datetime"),
             split(col("Open"), ",").getItem(0).cast("float").alias("open"),
             split(col("High"), ",").getItem(0).cast("float").alias("high"),
@@ -72,7 +89,21 @@ def load_csv_to_postgres(csv_file_path, table_name, spark, db_url, db_properties
         # Add symbol column
         df = df.withColumn("symbol", lit(symbol))
 
-        # Write to PostgreSQL
+        # Delete existing data using psycopg2
+        import psycopg2
+        db_config = load_db_config()
+        with psycopg2.connect(
+            host=db_config['host'],
+            database=db_config['dbname'],
+            user=db_config['user'],
+            password=db_config['password'],
+            port=db_config['port']
+        ) as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"DELETE FROM {table_name} WHERE symbol = %s", (symbol,))
+            conn.commit()
+
+        # Write new data to PostgreSQL
         df.write \
           .mode("append") \
           .jdbc(url=db_url, 
@@ -103,6 +134,20 @@ def test_db_connection():
         conn.close()
     except Exception as e:
         print(f"Error connecting to database: {e}")
+
+def cleanup_spark_session(spark):
+    """Clean up Spark session and resources."""
+    if spark is not None:
+        try:
+            # Stop the Spark session
+            spark.stop()
+            
+            # Force garbage collection
+            import gc
+            gc.collect()
+            
+        except Exception as e:
+            print(f"Error during Spark cleanup: {str(e)}")
 
 if __name__ == "__main__":
     test_db_connection()
