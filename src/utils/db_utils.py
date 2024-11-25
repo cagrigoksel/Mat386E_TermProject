@@ -1,5 +1,6 @@
 import yaml
 from pyspark.sql import SparkSession
+from src.utils.config_utils import load_config
 import os
 
 

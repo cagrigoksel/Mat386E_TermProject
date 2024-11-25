@@ -13,12 +13,12 @@ yahoo_finance:
 # Model ayarları
 model:
   strategy: "buy-hold-sell"    # Tahmin stratejisi ("buy-sell", "buy-hold-sell", "next_day_price" seçeneklerinden biri)
-  model_type: "random_forest"  # Kullanılacak model tipi ("random_forest", "prophet", vb.)
+  model_type: "xgboost"  # Kullanılacak model tipi ("random_forest", "prophet", vb.)
 
 # Proje ayarları
 project:
-  stocks: ["AAPL", "NVDA", "MSFT"]
-  indices: ["^GSPC", "^DJI"]
+  stocks: ["AAPL"]
+  indices: ["^GSPC"]
   initial_investment: 100000   # Başlangıç sermayesi
   transaction_fee: 0.001       # İşlem ücreti oranı
   train_period_start: "2010-01-01"

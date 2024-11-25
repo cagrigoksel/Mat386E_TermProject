@@ -12,17 +12,17 @@ def select_stocks(config):
     return stocks, indices, start_date, end_date
 
 
-def fetch_and_save_data(tickers, start, end, data_dir, label):
+def fetch_and_save_data(symbols, start, end, data_dir, label):
     """Veriyi Yahoo Finance API’den çekip csv olarak kaydeder."""
-    for ticker in tickers:
+    for symbol in symbols:
         # Veri çekme
-        data = yf.download(ticker, start=start, end=end)
+        data = yf.download(symbol)
 
         # Dosya ismi oluşturma
-        file_name = f"{label}_{ticker}_{datetime.now().strftime('%Y%m%d')}.csv"
+        file_name = f"{label}_{symbol}_{datetime.now().strftime('%Y%m%d')}.csv"
         file_path = os.path.join(data_dir, file_name)
 
         # Veriyi kaydetme
         data.to_csv(file_path)
-        print(f"{ticker} verisi {file_path} olarak kaydedildi.")
+        print(f"{symbol} verisi {file_path} olarak kaydedildi.")
 
